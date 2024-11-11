@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Login</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: url("static/login.jpeg") no-repeat center center fixed;
+        background-size: cover; /* Cover the entire viewport */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #333;
+        transition: background-color 0.5s ease-in-out;
+        position: relative; /* Positioning context for the overlay */
+      }
+
+      /* Overlay for the entire body */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+        z-index: 1; /* Behind the content */
+      }
+
+      .login-container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        width: 350px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+        position: relative; /* for the before pseudo-element */
+        z-index: 2; /* Ensure container is above the overlay */
+      }
+
+      h1 {
+        color: #ff4500;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+      }
+
+      p {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+        color: #333;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        border-color: #ff6600;
+        box-shadow: 0 0 5px rgba(255, 102, 0, 0.5);
+        outline: none;
+      }
+
+      button {
+        display: inline-block;
+        padding: 12px 30px;
+        color: #fff;
+        background-color: #ff6600;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        background-color: #e64a19;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:active {
+        background-color: #d84315;
+        transform: scale(0.98);
+      }
+
+      .loading {
+        margin-top: 20px;
+        color: #ff6600;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .back-button {
+        display: inline-block;
+        padding: 12px 30px;
+        color: #fff;
+        background-color: #ff6600;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-button:hover {
+        background-color: #cc5200;
+        transform: translateY(-3px);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Media queries for responsiveness */
+      @media (max-width: 768px) {
+        .login-container {
+          width: 90%;
+          padding: 30px;
+        }
+      }
+    </style>
+
+    <script>
+      function showLoading() {
+        document.getElementById("loading").style.display = "block";
+      }
+
+      // Enable kilometers driven input on vehicle number input focus
+      document
+        .getElementById("car_number")
+        .addEventListener("focus", function () {
+          document.getElementById("km_driven").disabled = false;
+        });
+    </script>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h1>Login Your Vehicle</h1>
+      <p>Enter your vehicle number to access your car details.</p>
+      <form action="/submit-car-number" method="POST" onsubmit="showLoading()">
+        <label for="car_number">Vehicle Number:</label>
+        <input
+          type="text"
+          id="car_number"
+          name="car_number"
+          required
+          placeholder="e.g., MP09WE1094"
+        />
+
+        <label for="km_driven">Kilometers Driven:</label>
+        <input
+          type="number"
+          id="km_driven"
+          name="km_driven"
+          required
+          placeholder="e.g., 10000"
+          min="0"
+          disabled
+        />
+
+        <button type="submit">Submit</button>
+      </form>
+      <div id="loading" class="loading" style="display: none">
+        Loading, please wait...
+      </div>
+      <a href="/" class="back-button">Back to Home</a>
+      <!-- Back button added here -->
+    </div>
+  </body>
+</html>

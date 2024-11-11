@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Driving Behavior Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      :root {
+        --primary-orange: #ff6b35;
+        --secondary-orange: #ff9f1c;
+        --dark-gray: #2b2d42;
+        --light-gray: #8d99ae;
+        --bg-gray: #f8f9fa;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            /* Dark overlay */ rgba(0, 0, 0, 0.6)
+          ),
+          url("static/Valuation.jpeg") no-repeat center center fixed;
+        background-size: cover; /* Make the image cover the entire body */
+        color: var(--dark-gray);
+        min-height: 100vh;
+      }
+
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .dashboard-header {
+        text-align: center;
+        padding: 2rem 0;
+        position: relative;
+        margin-bottom: 3rem;
+        background: #ff4500;
+        border-radius: 12px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15); /* Increased shadow for depth */
+        overflow: hidden;
+      }
+
+      .dashboard-title {
+        font-size: 2.5rem;
+        color: #ffffff; /* White for contrast */
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        animation: fadeInDown 1s ease-out;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+        cursor: pointer;
+      }
+
+      .dashboard-title:hover {
+        transform: scale(1.05);
+        text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.4); /* Glowing white effect */
+      }
+
+      .dashboard-subtitle {
+        color: rgba(255, 255, 255, 0.8); /* Lightened white */
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        animation: fadeIn 1.5s ease-out;
+        position: relative;
+        z-index: 2;
+      }
+
+      .dashboard-header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 160, 0, 0.3) 0%,
+          transparent 70%
+        );
+        animation: pulse 5s infinite ease-in-out;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* Keyframe Animations */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      .controls {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      .select-container {
+        position: relative;
+        width: 250px;
+      }
+
+      select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid var(--light-gray);
+        border-radius: 8px;
+        background: white;
+        color: var(--dark-gray);
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      select:hover {
+        border-color: var(--primary-orange);
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .chart-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        animation: fadeIn 1s ease-out;
+        margin-bottom: 80px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .chart-header {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .chart-header::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 107, 53, 0.2),
+          transparent
+        );
+        animation: shine 3s infinite;
+      }
+
+      @keyframes shine {
+        to {
+          left: 100%;
+        }
+      }
+
+      .chart-icon {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .select-container select {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        border: 2px solid var(--primary-orange);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(255, 107, 53, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+        }
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes slideInUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .chart-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--bg-gray);
+      }
+
+      .chart-title {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .back-button {
+        padding: 0.8rem 1.5rem;
+        background-color: #ff6600; /* Bright orange color */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* Hover effect for the back button */
+      .back-button:hover {
+        background-color: #e55b00; /* Slightly darker orange for hover */
+        transform: translateX(-50%) scale(1.05); /* Small scale effect on hover */
+      }
+
+      .chart-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 1rem;
+        background: var(--primary-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      /* Modified: Overall score chart size reduced */
+      .overall-score {
+        grid-column: span 2;
+        max-height: 400px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <button class="back-button" onclick="history.back()">Back</button>
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Vehicle Analytics Dashboard</h1>
+        <p class="dashboard-subtitle">
+          Real-time driving behavior monitoring and analysis
+        </p>
+      </header>
+
+      <div class="controls">
+        <div class="select-container">
+          <select id="tripDropdown">
+            <option selected>Select Trip</option>
+            <option value="1">Trip 1</option>
+            <option value="2">Trip 2</option>
+            <option value="3">Trip 3</option>
+            <option value="4">Trip 4</option>
+            <option value="5">Trip 5</option>
+            <option value="6">Trip 6</option>
+            <option value="7">Trip 7</option>
+            <option value="8">Trip 8</option>
+            <option value="9">Trip 9</option>
+            <option value="10">Trip 10</option>
+            <option value="11">Trip 11</option>
+            <option value="12">Trip 12</option>
+            <option value="13">Trip 13</option>
+            <option value="14">Trip 14</option>
+            <option value="15">Trip 15</option>
+          </select>
+        </div>
+        <div class="select-container">
+          <select id="minMaxAvgDropdown">
+            <option disabled selected>Select Analysis</option>
+            <option value="min">Minimum</option>
+            <option value="max">Maximum</option>
+            <option value="avg">Average</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">🔋</div>
+            <h3 class="chart-title">Fuel Consumption(L)</h3>
+          </div>
+          <canvas id="fuelConsumedChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">⚡</div>
+            <h3 class="chart-title">Speed Analysis(Km\h)</h3>
+          </div>
+          <canvas id="speedChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">⚙️</div>
+            <h3 class="chart-title">Engine RPM</h3>
+          </div>
+          <canvas id="engineRPMChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">🔄</div>
+            <h3 class="chart-title">Angular Velocity(deg/s)</h3>
+          </div>
+          <canvas id="angularVelocityChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">🛑</div>
+            <h3 class="chart-title">Brake Pressure(%)</h3>
+          </div>
+          <canvas id="brakePedalPressureChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon">🎮</div>
+            <h3 class="chart-title">Steering Analysis(Deg °)</h3>
+          </div>
+          <canvas id="steeringAngleChart"></canvas>
+        </div>
+        <div class="chart-card overall-score">
+          <div class="chart-header">
+            <div class="chart-icon">🎯</div>
+            <h3 class="chart-title">Overall Driving Score</h3>
+          </div>
+          <canvas id="overallDrivingScoreChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+           let drivingData = {};
+          let charts = {};
+          const chartData = {{ chart_data | tojson | safe }};
+          const carNumber = "{{ car_number }}";
+
+          // Event listener for the analysis selection dropdown
+          document
+      .getElementById("minMaxAvgDropdown")
+      .addEventListener("change", function () {
+        const selectedAnalysis = this.value;
+        if (selectedAnalysis) {
+          // Get the car number from the template variable
+          const carNumber = "{{ car_number }}";  // This assumes car_number is passed from Flask/template
+
+          // Build the URL with both analysis type and car number
+          const url = `${selectedAnalysis}?car_number=${carNumber}`;
+
+          // Navigate to the new URL
+          window.location.href = url;
+        }
+      });
+
+            Chart.defaults.font.family = "'Segoe UI', sans-serif";
+            Chart.defaults.color = "#2b2d42";
+
+            function loadCSV() {
+              Papa.parse("/driving.csv", {
+                download: true,
+                header: true,
+                complete: function (results) {
+                  if (results.data && results.data.length > 0) {
+                    const data = results.data;
+                    drivingData = {
+                      car_number: data.map((row) => row.car_number),
+                      tripId: data.map((row) => row.TripCount),
+                      fuelConsumed: data.map((row) => parseFloat(row.FuelConsumed) || 0),
+                      speed: data.map((row) => parseFloat(row.Speed) || 0),
+                      engineRPM: data.map((row) => parseFloat(row.EngineRPM) || 0),
+                      angularVelocity: data.map((row) => parseFloat(row.AngularVelocity) || 0),
+                      brakePedalPressure: data.map((row) => parseFloat(row.BrakePedalPressure) || 0),
+                      steeringAngle: data.map((row) => parseFloat(row.SteeringAngle_A) || 0),
+                      overallDrivingScore: data.map((row) => parseFloat(row.OverallDrivingScore) || 0),
+                    };
+                    populateTripDropdown(results.data);
+                    createCharts();
+                  }
+                },
+                error: function(error) {
+                  console.error('Error loading CSV:', error);
+                }
+              });
+            }
+
+            function populateTripDropdown(data) {
+              const tripDropdown = document.getElementById("tripDropdown");
+              tripDropdown.innerHTML = '<option value="">Select Trip</option>';
+
+              const relevantData = carNumber
+                ? data.filter(row => row.car_number === carNumber)
+                : data;
+
+              const uniqueTrips = [...new Set(relevantData.map(row => row.TripCount))]
+                .sort((a, b) => parseInt(a) - parseInt(b))
+                .slice(0, 15);
+
+              uniqueTrips.forEach(tripCount => {
+                const option = document.createElement("option");
+                option.value = tripCount;
+      option.textContent = `Trip ${tripCount}`;
+                const tripData = relevantData.find(row => row.TripCount === tripCount);
+                if (tripData) {
+                  option.setAttribute('data-car-number', tripData.car_number);
+                }
+                tripDropdown.appendChild(option);
+              });
+            }
+
+            document.getElementById("tripDropdown").addEventListener("change", function() {
+              const selectedTripId = this.value;
+              if (!selectedTripId) return;
+
+              const selectedOption = this.options[this.selectedIndex];
+              const carNumber = selectedOption.getAttribute('data-car-number');
+
+              if (selectedTripId && carNumber) {
+                window.location.href = `trip-details?tripId=${selectedTripId}&carNumber=${carNumber}`;
+              }
+            });
+
+            function destroyCharts() {
+              for (let chartId in charts) {
+                if (charts[chartId]) {
+                  charts[chartId].destroy();
+                }
+              }
+            }
+
+            function createCharts() {
+              destroyCharts();
+
+              // Generate different colors for each data point
+              function generateColors(count) {
+                const colors = [];
+                for(let i = 0; i < count; i++) {
+                  const hue = (i * 360 / count) % 360;
+                  colors.push(`hsla(${hue}, 70%, 60%, 0.8)`);
+                }
+                return colors;
+              }
+
+              charts["fuelConsumedChart"] = createChart(
+                "fuelConsumedChart",
+                "bar",
+                "Fuel Consumed",
+                chartData.fuelConsumed,
+                "rgba(255, 107, 53, 0.8)",
+                "rgba(255, 107, 53, 0.2)"
+              );
+
+              charts["speedChart"] = createChart(
+                "speedChart",
+                "line",
+                "Speed",
+                chartData.speed,
+                "rgba(255, 159, 28, 0.8)",
+                "rgba(255, 159, 28, 0.2)"
+              );
+
+              charts["engineRPMChart"] = createChart(
+                "engineRPMChart",
+                "bar",
+                "Engine RPM",
+                chartData.engineRPM,
+                "rgba(141, 153, 174, 0.8)",
+                "rgba(141, 153, 174, 0.2)"
+              );
+
+              // Modified: Different colors for Angular Velocity
+              const velocityColors = generateColors(chartData.angularVelocity.length);
+              charts["angularVelocityChart"] = createChart(
+                "angularVelocityChart",
+                "polarArea",
+                "Angular Velocity",
+                chartData.angularVelocity,
+                velocityColors,
+                velocityColors
+              );
+
+              // Modified: Different colors for Brake Pressure
+              const brakeColors = generateColors(chartData.brakePedalPressure.length).map(color =>
+                color.replace('0.8', '0.6')); // Slightly different shade
+              charts["brakePedalPressureChart"] = createChart(
+                "brakePedalPressureChart",
+                "doughnut",
+                "Brake Pedal Pressure",
+                chartData.brakePedalPressure,
+                brakeColors,
+                brakeColors
+              );
+
+              charts["steeringAngleChart"] = createChart(
+                "steeringAngleChart",
+                "bar",
+                "Steering Angle",
+                chartData.steeringAngle,
+                "rgba(141, 153, 174, 0.8)",
+                "rgba(141, 153, 174, 0.2)"
+              );
+
+              // Modified: Reduced size for overall driving score chart
+              charts["overallDrivingScoreChart"] = createChart(
+                "overallDrivingScoreChart",
+                "line",
+                "Overall Driving Score",
+                chartData.overallDrivingScore,
+                "rgba(255, 107, 53, 0.8)",
+                "rgba(255, 107, 53, 0.2)",
+                true // New parameter for overall score chart
+              );
+            }
+
+            function createChart(chartId, type, label, data, borderColor, backgroundColor, isOverallScore = false) {
+              const ctx = document.getElementById(chartId).getContext("2d");
+
+              const config = {
+                type: type,
+                data: {
+                  labels: data.map((_, index) => `Trip ${chartData.tripId[index]}`),
+                  datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColor,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                  }],
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: !isOverallScore, // Modified: Different aspect ratio for overall score
+                  plugins: {
+                    legend: {
+                      position: "top",
+                    },
+                    title: {
+                      display: false,
+                    },
+                  },
+                  animation: {
+                    duration: 2000,
+                    easing: "easeInOutQuart",
+                  },
+                },
+              };
+
+              // Additional options for overall score chart
+              if (isOverallScore) {
+                config.options.aspectRatio = 2.5; // Modified: Controls the height of overall score chart
+              }
+
+              if (type === "line" || type === "bar") {
+                config.options.scales = {
+                  y: {
+                    beginAtZero: true,
+                    grid: {
+                      color: "rgba(0, 0, 0, 0.1)",
+                    },
+                  },
+                  x: {
+                    grid: {
+                      display: false,
+                    },
+                  },
+                };
+              }
+
+              return new Chart(ctx, config);
+            }
+
+            window.onload = function() {
+              loadCSV();
+              createCharts();
+              document.querySelector('.dashboard-subtitle').textContent = `Driving behavior monitoring for vehicle ${carNumber}`;
+            };
+
+            let resizeTimer;
+            window.addEventListener("resize", () => {
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(() => {
+                createCharts();
+              }, 250);
+            });
+    </script>
+    <script>
+      function formatIndianCurrency(amount) {
+        let roundedAmount = Math.round(amount * 100) / 100;
+        let num = roundedAmount.toFixed(2);
+        let [integerPart, decimalPart] = num.split(".");
+        let lastThreeDigits = integerPart.slice(-3);
+        let otherDigits = integerPart.slice(0, -3);
+        if (otherDigits) {
+          lastThreeDigits = "," + lastThreeDigits;
+        }
+        let formattedInteger =
+          otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThreeDigits;
+        return "₹" + formattedInteger + "." + decimalPart;
+      }
+    </script>
+  </body>
+</html>

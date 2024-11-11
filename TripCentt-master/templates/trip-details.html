@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trip Details Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-orange: #ff8533; /* Softer orange */
+        --secondary-orange: #ff9933; /* Lightened orange */
+        --gradient-start: #ff8533; /* Adjusted gradient start */
+        --gradient-end: #ff9933; /* Adjusted gradient end */
+        --dark-gray: #333333;
+        --light-gray: #f4f4f4;
+        --white: #ffffff;
+        --card-shadow: rgba(255, 130, 0, 0.1); /* Softer shadow color */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f6f8fd 0%, #f0f3fa 100%);
+        font-family: "Segoe UI", sans-serif;
+        min-height: 100vh;
+        color: var(--dark-gray);
+      }
+
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .dashboard-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        padding: 2rem 0;
+      }
+
+      .dashboard-header h1 {
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 3rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 1rem;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .metric-card {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px var(--card-shadow);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transform-origin: center;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      .metric-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px var(--card-shadow);
+      }
+
+      .metric-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .metric-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .metric-icon {
+        font-size: 2.5rem;
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .metric-card:hover .metric-icon {
+        transform: scale(1.2) rotate(5deg);
+      }
+
+      .metric-title {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        opacity: 0.8;
+      }
+
+      .metric-value {
+        font-size: 2rem;
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 700;
+        transition: transform 0.3s ease;
+      }
+
+      .metric-card:hover .metric-value {
+        transform: scale(1.1);
+      }
+
+      .navigation-buttons {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 10;
+      }
+
+      .nav-button {
+        padding: 1rem 2rem;
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 130, 0, 0.3); /* Softer shadow color */
+      }
+
+      .nav-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 130, 0, 0.4); /* Softer shadow color */
+      }
+
+      .nav-button:disabled {
+        background: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .metric-card {
+        animation: fadeInUp 0.5s ease-out forwards;
+        animation-delay: calc(var(--animation-order) * 0.1s);
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-container {
+          padding: 1rem;
+        }
+
+        .dashboard-header h1 {
+          font-size: 2rem;
+        }
+
+        .metrics-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1rem;
+        }
+
+        .metric-card {
+          padding: 1.5rem;
+        }
+
+        .navigation-buttons {
+          flex-direction: column;
+          align-items: center;
+          bottom: 20px;
+        }
+
+        .nav-button {
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h1>Trip Details Dashboard</h1>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card" style="--animation-order: 1">
+          <i class="fas fa-car metric-icon"></i>
+          <h3 class="metric-title">Vehicle ID</h3>
+          <p class="metric-value" id="vehicleIdTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 2">
+          <i class="fas fa-route metric-icon"></i>
+          <h3 class="metric-title">Trip Count</h3>
+          <p class="metric-value" id="tripCountTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 3">
+          <i class="fas fa-gas-pump metric-icon"></i>
+          <h3 class="metric-title">Fuel Consumed (L)</h3>
+          <p class="metric-value" id="fuelConsumedTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 4">
+          <i class="fas fa-tachometer-alt metric-icon"></i>
+          <h3 class="metric-title">Speed (Km/h)</h3>
+          <p class="metric-value" id="speedTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 5">
+          <i class="fas fa-cog metric-icon"></i>
+          <h3 class="metric-title">Engine RPM</h3>
+          <p class="metric-value" id="engineRPMTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 6">
+          <i class="fas fa-sync metric-icon"></i>
+          <h3 class="metric-title">Angular Velocity (deg/s)</h3>
+          <p class="metric-value" id="angularVelocityTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 7">
+          <i class="fas fa-brake-system metric-icon"></i>
+          <h3 class="metric-title">Brake Pedal Pressure (%)</h3>
+          <p class="metric-value" id="brakePedalPressureTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 8">
+          <i class="fas fa-steering-wheel metric-icon"></i>
+          <h3 class="metric-title">Steering Angle (Degree °)</h3>
+          <p class="metric-value" id="steeringAngleTile"></p>
+        </div>
+
+        <div class="metric-card" style="--animation-order: 9">
+          <i class="fas fa-star metric-icon"></i>
+          <h3 class="metric-title">Overall Driving Score</h3>
+          <p class="metric-value" id="overallDrivingScoreTile"></p>
+        </div>
+      </div>
+
+      <div class="navigation-buttons">
+        <button
+          class="nav-button"
+          id="prevButton"
+          onclick="navigateTrip('prev')"
+        >
+          Previous Trip
+        </button>
+        <button class="nav-button" onclick="history.back()">Back</button>
+
+        <button
+          class="nav-button"
+          id="nextButton"
+          onclick="navigateTrip('next')"
+        >
+          Next Trip
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          tripId: params.get("tripId"),
+          carNumber: params.get("carNumber"),
+        };
+      }
+
+      function setElementContent(elementId, value) {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.textContent = value;
+        } else {
+          console.error(`Element with ID '${elementId}' not found`);
+        }
+      }
+
+      function formatValue(value) {
+        return value ? parseFloat(value).toFixed(2) : "N/A";
+      }
+
+      function navigateTrip(direction) {
+        const params = getUrlParams();
+        let currentTrip = parseInt(params.tripId);
+
+        if (direction === "prev") {
+          currentTrip = Math.max(1, currentTrip - 1);
+        } else {
+          currentTrip = Math.min(15, currentTrip + 1);
+        }
+
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("tripId", currentTrip);
+        window.location.href = newUrl.toString();
+      }
+
+      function updateNavigationButtons(currentTrip) {
+        document.getElementById("prevButton").disabled = currentTrip <= 1;
+        document.getElementById("nextButton").disabled = currentTrip >= 15;
+      }
+
+      function loadTripDetails() {
+        const params = getUrlParams();
+        const tripId = params.tripId;
+        const carNumber = params.carNumber;
+
+        if (!tripId || !carNumber) {
+          console.error("Invalid or missing parameters");
+          document.querySelectorAll(".metric-value").forEach((element) => {
+            if (element) {
+              element.textContent = "Invalid parameters";
+            }
+          });
+          return;
+        }
+
+        updateNavigationButtons(parseInt(tripId));
+
+        Papa.parse("driving.csv", {
+          download: true,
+          header: true,
+          complete: function (results) {
+            const tripData = results.data.find(
+              (row) =>
+                row.car_number === carNumber.toString() &&
+                row.TripCount === tripId.toString()
+            );
+
+            if (!tripData) {
+              console.error("Trip data not found");
+              document.querySelectorAll(".metric-value").forEach((element) => {
+                if (element) {
+                  element.textContent = "Data not found";
+                }
+              });
+              return;
+            }
+
+            const metrics = {
+              vehicleIdTile: tripData.car_number,
+              tripCountTile: tripData.TripCount,
+              fuelConsumedTile: formatValue(tripData.FuelConsumed),
+              speedTile: formatValue(tripData.Speed),
+              engineRPMTile: formatValue(tripData.EngineRPM),
+              angularVelocityTile: formatValue(tripData.AngularVelocity),
+              brakePedalPressureTile: formatValue(tripData.BrakePedalPressure),
+              steeringAngleTile: formatValue(tripData.SteeringAngle_A),
+              overallDrivingScoreTile: formatValue(
+                tripData.OverallDrivingScore
+              ),
+            };
+
+            Object.entries(metrics).forEach(([elementId, value]) => {
+              setElementContent(elementId, value || "N/A");
+            });
+          },
+          error: function (error) {
+            console.error("Error loading CSV:", error);
+            document.querySelectorAll(".metric-value").forEach((element) => {
+              if (element) {
+                element.textContent = "Error loading data";
+              }
+            });
+          },
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", loadTripDetails);
+    </script>
+  </body>
+</html>

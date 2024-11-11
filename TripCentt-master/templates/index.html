@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trip-Centt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <style>
+      /* Reset some default styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f8f9fc;
+        color: #333;
+        line-height: 1.6;
+        scroll-behavior: smooth;
+      }
+
+      /* Header Section */
+
+      /* Header Section */
+      .header {
+        position: relative; /* Positioning context for the overlay */
+        background-image: url("static/indeximage.jpeg"); /* Update with your image path */
+        background-size: cover; /* Makes the background cover the entire header */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        color: #ffffff;
+        padding: 60px 20px;
+        text-align: center;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        font-family: "Poppins", sans-serif; /* Poppins font for consistency */
+      }
+
+      .header::before {
+        content: ""; /* Create an empty content for the overlay */
+        position: absolute; /* Position it absolutely */
+        top: 0; /* Align to the top */
+        left: 0; /* Align to the left */
+        right: 0; /* Stretch to the right */
+        bottom: 0; /* Stretch to the bottom */
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Black background with 50% opacity */
+        z-index: 1; /* Place the overlay below the text */
+      }
+
+      .header .logo {
+        max-width: 130px;
+        margin-bottom: 20px;
+        margin-left: -20px; /* Adjust this value as needed to shift left */
+        animation: fadeIn 1.5s ease-in-out;
+        z-index: 2; /* Ensure logo is above the overlay */
+        position: relative; /* Positioning context for the logo */
+      }
+
+      .header h1 {
+        font-size: 3.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        letter-spacing: 2px;
+        animation: slideIn 1s ease-in-out;
+        z-index: 2; /* Ensure the title is above the overlay */
+        position: relative; /* Positioning context for the title */
+      }
+
+      /* Updated styles for the paragraph */
+      .header p {
+        font-size: 1.5rem; /* Increased font size */
+        font-weight: 700; /* Bold font weight */
+        color: #ffffff; /* Changed text color to white for contrast */
+        background-color: rgba(
+          255,
+          102,
+          0,
+          0.8
+        ); /* Semi-transparent orange background */
+        padding: 10px; /* Added padding for better visibility */
+        border-radius: 8px; /* Rounded corners for the background */
+        margin-bottom: 25px;
+        line-height: 1.6;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for depth */
+        z-index: 2; /* Ensure paragraph is above the overlay */
+        position: relative; /* Positioning context for the paragraph */
+      }
+
+      /* CTA Button */
+      .cta-button {
+        background-color: #ffffff;
+        color: #ff4500;
+        padding: 14px 32px;
+        border-radius: 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        z-index: 2; /* Ensure button is above the overlay */
+      }
+
+      .cta-button::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #ff4500;
+        transition: width 0.4s ease, left 0.4s ease;
+      }
+
+      .cta-button:hover {
+        background-color: transparent;
+        color: #ff4500;
+        border-color: #ff4500;
+        transform: scale(1.1);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .cta-button:hover::after {
+        width: 100%;
+        left: 0;
+      }
+
+      /* Keyframes for Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Features Section */
+      .features-section {
+        position: relative; /* To position the overlay correctly */
+        background: url("static/feature.jpeg") no-repeat center center fixed; /* Set your background image */
+        background-size: cover; /* Cover the entire section */
+        padding: 80px 0;
+        text-align: center;
+        color: #fff; /* Change text color for better contrast */
+      }
+
+      /* Optional: Overlay for better readability */
+      .features-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3); /* Adjust opacity for the overlay */
+        z-index: 1; /* Behind the content */
+      }
+
+      .features-section h2 {
+        font-size: 2.5rem;
+        color: #ff6600; /* Keep this color as is for contrast */
+        margin-bottom: 40px;
+        font-weight: 600;
+        animation: fadeIn 1.2s ease-in;
+        z-index: 2; /* Above the overlay */
+        position: relative; /* Positioning context for z-index */
+      }
+
+      .features {
+        display: flex;
+        justify-content: space-around;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 0 10%;
+        z-index: 2; /* Above the overlay */
+        position: relative; /* Positioning context for z-index */
+      }
+
+      .feature {
+        background: rgba(
+          249,
+          249,
+          249,
+          0.9
+        ); /* Semi-transparent background for features */
+        border-radius: 12px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 280px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-top: 3px solid #ff8c00;
+        position: relative; /* For z-index management */
+      }
+
+      .feature img {
+        max-width: 90px;
+        margin-bottom: 15px;
+      }
+
+      .feature h3 {
+        color: #ff6600;
+        margin-bottom: 10px;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .feature p {
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .feature:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Valuation Section */
+      .valuation-section {
+        position: relative; /* To position the overlay correctly */
+        background: url("static/Valuation.jpeg") no-repeat center center fixed; /* Set your background image */
+        background-size: cover; /* Cover the entire section */
+        padding: 80px 0;
+        text-align: center;
+        color: #fff; /* Change text color for better contrast */
+      }
+
+      /* Optional: Overlay for better readability */
+      .valuation-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7); /* Darker overlay for better contrast */
+        z-index: 1; /* Behind the content */
+      }
+
+      .valuation-section h2 {
+        color: #ff9900; /* Darker orange for contrast */
+        font-weight: 700; /* Bold font weight for emphasis */
+        font-size: 3rem; /* Increased font size for prominence */
+        margin-bottom: 30px;
+        z-index: 2; /* Above the overlay */
+        position: relative; /* Positioning context for z-index */
+
+        /* Darker gradient text effect */
+        background: linear-gradient(
+          90deg,
+          #ff9900,
+          #ff6600
+        ); /* Adjusted gradient */
+        -webkit-background-clip: text; /* For Safari */
+        -webkit-text-fill-color: transparent; /* For Safari */
+
+        /* Adding a darker shadow effect */
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8),
+          1px 1px 5px rgba(255, 255, 255, 0.1); /* Darker text shadow */
+        padding: 10px; /* Add padding for better spacing */
+        border-radius: 8px; /* Rounded corners for the background */
+      }
+
+      .valuation-section p {
+        font-size: 1.1rem;
+        color: #e0e0e0; /* Light grey for better readability */
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin: 0 auto 30px;
+        line-height: 1.8;
+        z-index: 2; /* Above the overlay */
+        position: relative; /* Positioning context for z-index */
+      }
+      .valuation-result {
+        font-size: 2rem; /* Larger font size for emphasis */
+        color: #ffffff; /* Golden color for valuation display */
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(255, 204, 51, 0.8),
+          0 0 25px rgba(255, 204, 51, 0.6), 0 0 35px rgba(255, 153, 0, 0.4); /* Glowing effect */
+        margin-top: 40px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: inline-block;
+        background: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Semi-transparent background for readability */
+        z-index: 2;
+        position: relative;
+      }
+
+      .styled-dropdown {
+        padding: 12px;
+        width: 340px;
+        border: 2px solid #ff9900;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #fff;
+        color: #333;
+        appearance: none;
+        background-image: url("static/formula.jpeg");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 15px;
+        transition: border-color 0.3s, background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+      }
+
+      .styled-dropdown:hover {
+        border-color: #ff6600;
+        background-color: #f0f0f0;
+      }
+
+      .styled-dropdown:focus {
+        border-color: #ff6600;
+        outline: none;
+        background-color: #f7f7f7;
+      }
+
+      .styled-dropdown option {
+        background-color: #fff;
+        color: #333;
+      }
+
+      .idv-result {
+        font-size: 2rem; /* Slightly smaller than the main valuation */
+        color: #ffffff; /* Same color to keep consistent */
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(255, 204, 51, 0.8),
+          0 0 20px rgba(255, 153, 0, 0.6);
+        margin-top: 20px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.5); /* Darker background for emphasis */
+      }
+      .formula-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 25px;
+        color: #ff9900;
+        background-color: transparent;
+        border: 2px solid #ff9900;
+        border-radius: 25px; /* Increased radius for a more circular shape */
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        z-index: 2; /* Ensure it's above the overlay */
+        position: relative;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+      }
+
+      .formula-button:hover {
+        background-color: #ff6600;
+        color: #fff;
+        border-color: #ff6600;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+      }
+
+      .formula-button:active {
+        background-color: #cc5200; /* Slightly darker color when clicked */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Shadow reduction on click */
+        transform: translateY(1px); /* Pressed effect */
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        z-index: 2; /* Above the overlay */
+        position: relative; /* Positioning context for z-index */
+      }
+
+      .form-group input {
+        padding: 12px;
+        width: 320px;
+        border: 2px solid #ff9900; /* Darker border color */
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+        background-color: #fff; /* Ensure the input fields are white for visibility */
+      }
+
+      .form-group input:focus {
+        border-color: #ff6600; /* Darker focus color */
+        outline: none;
+      }
+
+      /* Trust Section */
+      .trust-section {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 69, 0, 0.8),
+            rgba(255, 140, 0, 0.8)
+          ),
+          url("static/car.jpeg");
+        background-size: cover; /* Cover the entire section */
+        background-position: center; /* Center the background image */
+        color: white;
+        padding: 40px 50px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-family: "Poppins", sans-serif; /* Apply Poppins font */
+      }
+
+      .trust-section h2 {
+        font-size: 3rem;
+        font-weight: 700; /* Bold style for headings */
+        margin-bottom: 30px;
+        letter-spacing: 1.5px;
+        animation: fadeInDown 1s ease;
+      }
+
+      .trust-section p {
+        max-width: 700px;
+        margin: 0 auto 40px;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        font-weight: 400; /* Regular weight for paragraph */
+        opacity: 0.95;
+        color: #fffdfd;
+        animation: fadeInUp 1s ease;
+      }
+
+      .trust-section .cta-button {
+        margin-top: 40px;
+        padding: 15px 35px;
+        background-color: #ffffff;
+        color: #ff4500;
+        font-size: 1.1rem;
+        font-weight: 500; /* Medium weight for button text */
+        border-radius: 25px;
+        transition: all 0.4s ease;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .trust-section .cta-button:hover {
+        color: #ffffff;
+        background-color: #ff4500;
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-5px);
+      }
+
+      /* Keyframes for fade-in animations */
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Footer */
+      .footer {
+        background: #333;
+        color: white;
+        padding: 25px 0;
+        text-align: center;
+      }
+
+      .footer p {
+        font-size: 0.9rem;
+        color: #bbb;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideIn {
+        0% {
+          transform: translateY(-40px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <img
+        src="{{ url_for('static', filename='Trip.png') }}"
+        alt="Trip-Centt Logo"
+        class="logo"
+      />
+      <div class="header-text">
+        <h1>Trip-Centt</h1>
+        <p>
+          Revolutionizing Trust and Transparency in the Second-Hand Vehicle
+          Market
+        </p>
+        <a href="{{ url_for('car_login') }}" class="cta-button"
+          >Login Your Vehicle</a
+        >
+      </div>
+    </header>
+
+    <section id="features" class="features-section">
+      <h2>What We Offer</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Car Valuation</h3>
+          <p>
+            Accurately assess your vehicle's value using comprehensive data.
+          </p>
+        </div>
+        <div class="feature">
+          <h3>Driving Behaviour</h3>
+          <p>Insight into past driving patterns for smarter decisions.</p>
+        </div>
+        <div class="feature">
+          <h3>Driving Dashboard</h3>
+          <p>Visualize key driving metrics instantly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="valuation-section">
+      <h2>Get Your Car Valuation</h2>
+      <p>Input your vehicle details below for an instant valuation.</p>
+      <form action="/calculate-manual-valuation" method="POST">
+        <div class="form-group">
+          <input
+            type="text"
+            name="initial_car_price"
+            placeholder="Enter Initial Car Price"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="vehicle_age"
+            placeholder="Enter Vehicle Age (in years)"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="condition_score"
+            placeholder="Enter Condition Score (0.0 to 1.0)"
+            required
+          />
+        </div>
+
+        <!-- Default Hidden Inputs for Market Index and Seller Type -->
+        <input type="hidden" name="market_demand_index" value="1" />
+        <input type="hidden" name="seller_type_factor" value="1" />
+        <input type="hidden" name="brand_reputation_factor" value="1" />
+
+        <div class="form-group">
+          <select name="fuel_type" class="styled-dropdown" required>
+            <option value="" disabled selected>Select Fuel Type</option>
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="num_insurance_claims"
+            placeholder="Enter Number of Insurance Claims"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="km_driven"
+            placeholder="Enter Kilometers Driven"
+            required
+          />
+        </div>
+        <button type="submit" class="cta-button">Calculate Valuation</button>
+      </form>
+
+      <!-- Displaying the result-->
+      {% if car_valuation and idv %}
+      <div class="valuation-result">
+        Estimated Car Valuation: {{ car_valuation | round(2) }} INR
+      </div>
+      <div class="idv-result">
+        Insured Declared Value (IDV): {{ idv | round(2) }} INR
+      </div>
+      {% endif %}
+      <a href="{{ url_for('formula') }}" class="formula-button"
+        >See the Incredible Magic of Trip-Centt</a
+      >
+    </section>
+
+    <section class="trust-section">
+      <h2>Why Trust Us?</h2>
+      <p>
+        Experience transparency and accuracy in the used vehicle market with our
+        cutting-edge data solutions.
+      </p>
+      <a href="{{ url_for('about') }}" class="cta-button">About Us</a>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2024 Trip-Centt. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

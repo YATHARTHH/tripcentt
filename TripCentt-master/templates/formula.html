@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Valuation Formula Explanation</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: url("static/Details.jpeg") no-repeat center center / cover; /* Add your image here */
+        color: #333;
+        min-height: 100vh;
+        line-height: 1.6;
+        overflow-x: hidden;
+        position: relative; /* Make it relative for the overlay */
+        animation: fadeInBg 2s ease-in;
+      }
+
+      /* Overlay to darken background */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black for opacity */
+        z-index: 0; /* Place behind the content */
+      }
+
+      /* Header Section */
+      .header {
+        position: relative;
+        background: url("static/login.jpeg") no-repeat center center / cover;
+        color: #fff;
+        padding: 60px 20px;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        z-index: 1;
+        position: relative;
+        animation: slideDown 1s ease-in-out;
+        letter-spacing: 1px;
+        color: #f8f9fc;
+        text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Keyframes for Title Animation */
+      @keyframes slideDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Formula Section */
+      .formula-section {
+        padding: 40px 30px; /* Added horizontal padding for better balance */
+        margin: 20px auto;
+        border-radius: 12px; /* Slightly increased border radius for a softer look */
+        max-width: 800px;
+        position: relative;
+        background: #fff;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25); /* Enhanced shadow for more depth */
+        animation: fadeIn 1.2s ease-in;
+        overflow: hidden;
+      }
+
+      /* Overlay for the Formula Section */
+      .formula-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.9); /* Slightly more opaque overlay */
+        z-index: 1;
+        border-radius: 12px; /* Match border radius of the section */
+      }
+
+      /* Heading Styles */
+      .formula-section h2 {
+        font-size: 2rem; /* Maintain font size */
+        color: #ff4500; /* Changed to a vibrant orange-red color */
+        margin-bottom: 20px; /* Keep the margin */
+        font-weight: 800; /* Increased font weight for bolder appearance */
+        text-align: center; /* Centered heading */
+        text-transform: uppercase; /* Make the text uppercase for emphasis */
+        letter-spacing: 1px; /* Added letter spacing for a more open feel */
+        border-bottom: 3px solid #ff6600; /* Added a border for emphasis */
+        padding-bottom: 10px; /* Added padding below the text */
+        animation: scaleIn 0.6s ease-in; /* Retain animation */
+        position: relative; /* Keep z-index positioning */
+        z-index: 2; /* Keep z-index */
+      }
+
+      /* Paragraph and List Styles */
+      .formula-section p,
+      .formula-section ul {
+        font-size: 1.1rem; /* Consistent font size */
+        color: #444;
+        margin-bottom: 20px; /* Increased margin for improved spacing */
+        line-height: 1.8; /* Increased line height for readability */
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Unordered List Styles */
+      .formula-section ul {
+        list-style-type: none; /* No bullets */
+        padding-left: 0; /* Remove padding */
+        text-align: left; /* Left align bullet points */
+      }
+
+      /* List Item Styles */
+      .formula-section li {
+        margin-bottom: 12px; /* Increased spacing between list items */
+        position: relative;
+        padding-left: 20px; /* Added padding for bullet points */
+      }
+
+      .formula-section li::before {
+        content: "•"; /* Custom bullet point */
+        color: #ff6600; /* Match theme color */
+        position: absolute;
+        left: 0; /* Positioning bullet point */
+      }
+
+      /* Keyframes for Elements */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes scaleIn {
+        0% {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Formula Styling */
+      .formula {
+        background: #ff8000;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        color: #333;
+        font-size: 1.2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .formula::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.3) 25%,
+          transparent 25%
+        );
+        animation: shine 2s infinite linear;
+        pointer-events: none;
+      }
+
+      @keyframes shine {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* Button Container for Centering */
+      .button-container {
+        display: flex; /* Use flexbox to center the content */
+        justify-content: center; /* Center horizontally */
+        margin: 20px 0; /* Add some margin for spacing */
+      }
+
+      /* Back Button Styling */
+      .back-button {
+        display: inline-block;
+        padding: 12px 30px;
+        color: #fff;
+        background-color: #ff6600;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        animation: float 2s infinite ease-in-out;
+      }
+
+      .back-button:hover {
+        background-color: #cc5200;
+        transform: translateY(-3px);
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+      }
+
+      /* Footer */
+      .footer {
+        background: #333;
+        color: white;
+        padding: 25px 0;
+        text-align: center;
+      }
+
+      .footer p {
+        font-size: 0.9rem;
+        color: #bbb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Understanding Trip-Centt Car Valuation</h1>
+    </div>
+
+    <div class="formula-section">
+      <h2>IDV Calculation</h2>
+
+      <div class="formula">
+        <p>
+          The Insured Declared Value (IDV) is a critical component in the world
+          of car insurance and valuation. It represents the maximum amount an
+          insurance company agrees to pay in case of a total loss or theft of
+          your vehicle. The IDV is calculated based on the vehicle's current
+          market value, considering factors like depreciation, age, and
+          manufacturer’s listed price.
+        </p>
+        <p>The Insured Declared Value (IDV) is calculated as follows:</p>
+        <p>Why is IDV Important?</p>
+        <ul>
+          <li>
+            <strong>Financial Protection:</strong> The IDV serves as a safeguard
+            for car owners. In the unfortunate event of an accident leading to a
+            total loss or if your vehicle is stolen, the IDV ensures that you
+            receive a fair compensation amount that reflects your car's current
+            market value. This can help you recover financially and make it
+            easier to purchase a replacement vehicle.
+          </li>
+          <li>
+            <strong>Premium Calculation:</strong> The IDV directly influences
+            your insurance premium. A higher IDV typically results in higher
+            premiums, as the insurer's potential payout in case of a claim
+            increases. Conversely, opting for a lower IDV can reduce your
+            premium costs, but it’s crucial to strike a balance to ensure you’re
+            adequately covered in case of loss.
+          </li>
+          <li>
+            <strong>Depreciation Impact:</strong> As vehicles age, their value
+            depreciates. The IDV is adjusted annually based on the depreciation
+            rate defined by the insurer, which reflects the vehicle's decreasing
+            value over time. This means that understanding IDV helps car owners
+            keep track of their vehicle’s worth and plan accordingly for
+            insurance needs.
+          </li>
+          <li>
+            <strong>Market Value Reflection:</strong> IDV is not just a number;
+            it reflects the actual market value of your vehicle at a given time.
+            Factors such as make, model, condition, and mileage play a
+            significant role in determining IDV. This helps ensure that car
+            owners are not underinsured or overinsured based on current market
+            trends.
+          </li>
+          <li>
+            <strong>Peace of Mind:</strong> Knowing the IDV of your vehicle
+            provides peace of mind. You can rest assured that in the event of
+            unforeseen circumstances, you will receive compensation that
+            reflects the actual value of your car. This confidence allows you to
+            enjoy your vehicle without the constant worry of potential financial
+            loss.
+          </li>
+        </ul>
+        <p>
+          <strong
+            >IDV = Initial Car Price × (1 - Depreciation Percentage)</strong
+          >
+        </p>
+        <p>
+          where the depreciation percentage is defined based on vehicle age:
+        </p>
+        <ul>
+          <li>0.05 if age ≤ 0.5 years</li>
+          <li>0.15 if age ≤ 1 year</li>
+          <li>0.20 if age ≤ 2 years</li>
+          <li>0.30 if age ≤ 3 years</li>
+          <li>0.40 if age ≤ 4 years</li>
+          <li>0.50 if age ≤ 5 years</li>
+          <li>0.60 if age > 5 years</li>
+        </ul>
+        <p>This formula reflects the car's depreciation over time.</p>
+        <p>
+          <strong
+            >In Trip-Centt, we ensure users will get more value than the
+            calculated IDV. That is why we are also calculating the IDV.</strong
+          >
+        </p>
+        <p>This formula reflects the car's depreciation over time.</p>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <h2>Trip-Centt Valuation Calculation</h2>
+
+      <div class="formula">
+        <p>
+          At Trip-Centt, we leverage advanced algorithms and comprehensive
+          market analysis to provide precise car valuations. Our transparent
+          process ensures you understand how your vehicle's value is determined,
+          leaving no room for surprises.:
+        </p>
+        <p>
+          <strong class="highlighted-formula">
+            Car Valuation = IDV × (1 - Depreciation Factor - Km Depreciation
+            Factor) × (1 - Total Insurance Depreciation) × Condition Factor ×
+            Market Trend Adjustment × Seller Type Factor × Brand Reputation
+            Factor
+          </strong>
+        </p>
+
+        <p>where:</p>
+        <ul>
+          <li>
+            <strong>Depreciation Factor:</strong> Calculated based on vehicle
+            age and expected lifespan, capped at 90%.
+          </li>
+          <li>
+            <strong>Km Depreciation Factor:</strong> An additional 10% reduction
+            if average annual mileage exceeds 8,000 km.
+          </li>
+          <li>
+            <strong>Total Insurance Depreciation:</strong> 5% reduction for each
+            insurance claim (capped at 50%).
+          </li>
+          <li>
+            <strong>Condition Factor:</strong> 1 for excellent condition,
+            reduces down to 0.5 for poor condition.
+          </li>
+          <li>
+            <strong>Market Trend Adjustment:</strong> 5% increase for high
+            demand, 5% decrease for low demand.
+          </li>
+          <li>
+            <strong>Seller Type Factor:</strong> 0.95 for private sales, 1 for
+            dealers, adjusted to a range of 0.6 to 1.0.
+          </li>
+          <li>
+            <strong>Brand Reputation Factor:</strong> 1.1 for top brands, 0.9
+            for less reputable brands.
+          </li>
+          <li>
+            <strong>50k Price Factor:</strong> If the car price is around
+            ₹50,000, additional factors may apply for regional demand and supply
+            dynamics.
+          </li>
+        </ul>
+        <p>
+          With Trip-Centt, you can trust that our valuation is thorough and
+          accurate, ensuring you get the best price for your vehicle. We're
+          dedicated to providing a seamless experience, making car selling and
+          buying the best it can be!
+        </p>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <a href="/" class="back-button">Back to Valuation</a>
+    </div>
+    <footer class="footer">
+      <p>&copy; 2024 Trip-Centt All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

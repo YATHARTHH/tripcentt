@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Details Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/path/to/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/path/to/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 160, 100, 0.8),
+            /* Adjusted to a lighter orange */ rgba(200, 120, 80, 0.9)
+              /* Same adjustment for consistency */
+          ),
+          url("static/car.jpeg");
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent the image from repeating */
+        margin: 0;
+        padding: 20px;
+      }
+
+      .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      h1 {
+        color: #fff; /* Change text color to white for better contrast */
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        background-color: #ff4500; /* Highlight background color */
+        padding: 10px; /* Add padding around the text */
+        border-radius: 5px; /* Optional: rounded corners */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add shadow to text */
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .card-header {
+        background: #ff4500;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin: -20px -20px 20px -20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .info-label {
+        color: #666;
+        font-weight: 500;
+      }
+      .info-value {
+        color: #333;
+        font-weight: 600;
+      }
+      .predicted-price {
+        text-align: center;
+        font-size: 32px;
+        color: #00c853;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+      .parameters-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .parameter-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      .parameter-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
+      .parameter-icon {
+        font-size: 24px;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      .parameter-title {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      .driving-score {
+        background: #2ecc71;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: inline-block;
+      }
+      .dashboard-button,
+      .back-button {
+        display: block;
+        background: #ff4500;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 20px;
+        transition: background 0.3s;
+      }
+      .dashboard-button:hover,
+      .back-button:hover {
+        background: #e03e00; /* Darker shade for hover effect */
+      }
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+      <h1>Vehicle Details Dashboard</h1>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-car"></i>
+            Car Information
+          </div>
+          <div class="info-grid">
+            <span class="info-label">Registration No:</span>
+            <span class="info-value">{{ car_data['reg_no'] }}</span>
+
+            <span class="info-label">Registration Date:</span>
+            <span class="info-value">{{ car_data['reg_date'] }}</span>
+
+            <span class="info-label">Brand:</span>
+            <span class="info-value">{{ car_data['make'] }}</span>
+
+            <span class="info-label">Model:</span>
+            <span class="info-value">{{ car_data['model'] }}</span>
+
+            <span class="info-label">Fuel Type:</span>
+            <span class="info-value">{{ car_data['fuel_descr'] }}</span>
+
+            <span class="info-label">Manufacturing Year:</span>
+            <span class="info-value">{{ car_data['year'] }}</span>
+
+            <span class="info-label">Engine Number:</span>
+            <span class="info-value">{{ car_data['engine_no'] }}</span>
+
+            <span class="info-label">Chassis Number:</span>
+            <span class="info-value">{{ car_data['chassis_no'] }}</span>
+
+            <span class="info-label">Ex-Showroom Price:</span>
+            <span class="info-value" id="ex-showroom-price"
+              >₹{{ car_data['ex_showroom_price'] }}</span
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-tag"></i>
+              Predicted Car Price
+            </div>
+            <div class="predicted-price" id="predicted-price">
+              ₹{{ predicted_price }}
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <i class="fas fa-chart-line"></i>
+              Valuation Parameters
+            </div>
+            <div class="parameters-grid">
+              <div class="parameter-card">
+                <div class="parameter-icon">🛣️</div>
+                <div class="parameter-title">Kilometers Driven</div>
+              </div>
+              <div class="parameter-card">
+                <div class="parameter-icon">🎯</div>
+                <div class="parameter-title">Driving Score</div>
+              </div>
+              <div class="parameter-card">
+                <div class="parameter-icon">📅</div>
+                <div class="parameter-title">Manufacturing Year</div>
+              </div>
+              <div class="parameter-card">
+                <div class="parameter-icon">⛽</div>
+                <div class="parameter-title">Fuel Type</div>
+              </div>
+              <div class="parameter-card">
+                <div class="parameter-icon">📄</div>
+                <div class="parameter-title">Insurance Claims</div>
+              </div>
+              <div class="parameter-card">
+                <div class="parameter-icon">🔋</div>
+                <div class="parameter-title">Fuel Type Limit</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Back Button -->
+          <a href="{{ url_for('car_login') }}" class="back-button">BACK</a>
+
+          <!-- View Driving Behavior Button -->
+          <a
+            href="{{ url_for('driving_dashboard', car_number=car_number) }}"
+            class="dashboard-button"
+          >
+            VIEW DRIVING BEHAVIOR DASHBOARD
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function formatIndianCurrency(value) {
+        // Round the value to two decimal places
+        const roundedValue = Math.round(value * 100) / 100;
+
+        // Convert the number to a string and split it into whole and decimal parts
+        let [whole, decimals] = roundedValue.toString().split(".");
+
+        // Ensure decimals have exactly two digits
+        if (decimals) {
+          decimals = (decimals + "00").substring(0, 2);
+        } else {
+          decimals = "00";
+        }
+
+        // Format the whole part with the first comma after three digits and subsequent commas every two digits
+        let formattedWhole = "";
+        const lastThreeDigits = whole.slice(-3);
+        const otherDigits = whole.slice(0, -3);
+
+        if (otherDigits) {
+          // Add commas for the rest of the number, starting with the last three digits
+          formattedWhole =
+            otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",") +
+            "," +
+            lastThreeDigits;
+        } else {
+          formattedWhole = lastThreeDigits;
+        }
+
+        // Return formatted value with Rupee symbol
+        return `₹${formattedWhole}.${decimals}`;
+      }
+
+      window.onload = function () {
+        // Format ex-showroom price
+        const exShowroomPriceElement =
+          document.getElementById("ex-showroom-price");
+        const exShowroomPrice = parseFloat(
+          exShowroomPriceElement.innerText.replace(/[₹,]/g, "")
+        );
+        exShowroomPriceElement.innerText =
+          formatIndianCurrency(exShowroomPrice);
+
+        // Format predicted price
+        const predictedPriceElement =
+          document.getElementById("predicted-price");
+        const predictedPrice = parseFloat(
+          predictedPriceElement.innerText.replace(/[₹,]/g, "")
+        );
+        predictedPriceElement.innerText = formatIndianCurrency(predictedPrice);
+      };
+    </script>
+  </body>
+</html>

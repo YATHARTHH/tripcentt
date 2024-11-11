@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maximum Values Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+      :root {
+        --primary-orange: #ff6b35;
+        --secondary-orange: #ff9f1c;
+        --dark-gray: #2b2d42;
+        --light-gray: #8d99ae;
+        --bg-gray: #f8f9fa;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        background: var(--bg-gray);
+        color: var(--dark-gray);
+        min-height: 100vh;
+      }
+
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .dashboard-header {
+        text-align: center;
+        padding: 2rem 0;
+        position: relative;
+        margin-bottom: 3rem;
+      }
+
+      .dashboard-title {
+        font-size: 2.5rem;
+        color: var(--primary-orange);
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: fadeInDown 1s ease-out;
+      }
+
+      .dashboard-subtitle {
+        color: var(--light-gray);
+        font-size: 1.1rem;
+        animation: fadeIn 1.5s ease-out;
+      }
+
+      .tiles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .tile-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .tile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .tile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .tile-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 1rem;
+        background: var(--primary-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .tile-title {
+        color: var(--dark-gray);
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .tile-content {
+        text-align: center;
+      }
+
+      .tile-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-orange);
+      }
+
+      .back-button {
+        padding: 0.8rem 1.5rem;
+        background-color: var(--secondary-orange);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .back-button:hover {
+        background-color: var(--primary-orange);
+      }
+
+      .no-data {
+        text-align: center;
+        padding: 2rem;
+        color: var(--light-gray);
+        font-size: 1.2rem;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <button class="back-button" onclick="history.back()">Back</button>
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Maximum Values Dashboard</h1>
+        <p class="dashboard-subtitle" id="carSubtitle">Loading...</p>
+      </header>
+
+      <div class="tiles-grid" id="tilesGrid"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const carNumber = urlParams.get("car_number");
+
+      function loadCSV() {
+        if (!carNumber) {
+          showNoDataMessage("No car number specified");
+          return;
+        }
+
+        Papa.parse("driving.csv", {
+          download: true,
+          header: true,
+          complete: function(results) {
+            const carData = results.data.filter(
+              (trip) => trip.car_number === carNumber
+            );
+
+            if (carData.length === 0) {
+              showNoDataMessage(`No data found for car number ${carNumber}`);
+              return;
+            }
+
+            document.getElementById("carSubtitle").textContent = 
+              `Maximum values for Car ${carNumber}`;
+            
+            const maxValues = calculateMaxValues(carData);
+            createTiles(maxValues);
+          },
+          error: function(error) {
+            showNoDataMessage("Error loading data: " + error);
+          },
+        });
+      }
+
+      function showNoDataMessage(message) {
+        document.getElementById("carSubtitle").textContent = message;
+        document.getElementById("tilesGrid").innerHTML = `
+          <div class="no-data">${message}</div>
+        `;
+      }
+
+      function calculateMaxValues(trips) {
+        const metrics = [
+          { key: 'Max_FuelConsumed', value: 'Max_FuelConsumed' },
+          { key: 'Max_Speed', value: 'Max_Speed' },
+          { key: 'Max_EngineRPM', value: 'Max_EngineRPM' },
+          { key: 'Max_AngularVelocity', value: 'Max_AngularVelocity' },
+          { key: 'Max_BrakePedalPressure', value: 'Max_BrakePedalPressure' },
+          { key: 'Max_SteeringAngle_A', value: 'Max_SteeringAngle_A' },
+          { key: 'Max_OverallDrivingScore', value: 'Max_OverallDrivingScore' }
+        ];
+
+        return metrics.reduce((acc, { key, value }) => {
+          acc[key] = {
+            value: parseFloat(trips[0][value]) || 0
+          };
+          return acc;
+        }, {});
+      }
+
+      function createTiles(maxValues) {
+        const tiles = [
+          {
+            icon: "🔋",
+            title: "Maximum Fuel Consumption",
+            key: "Max_FuelConsumed",
+            unit: "L"
+          },
+          {
+            icon: "⚡",
+            title: "Maximum Speed",
+            key: "Max_Speed",
+            unit: "km/h"
+          },
+          {
+            icon: "⚙️",
+            title: "Maximum Engine RPM",
+            key: "Max_EngineRPM",
+            unit: "RPM"
+          },
+          {
+            icon: "🔄",
+            title: "Maximum Angular Velocity",
+            key: "Max_AngularVelocity",
+            unit: "rad/s"
+          },
+          {
+            icon: "🛑",
+            title: "Maximum Brake Pressure",
+            key: "Max_BrakePedalPressure",
+            unit: "N"
+          },
+          {
+            icon: "🎮",
+            title: "Maximum Steering Angle",
+            key: "Max_SteeringAngle_A",
+            unit: "°"
+          },
+          {
+            icon: "🎯",
+            title: "Maximum Overall Driving Score",
+            key: "Max_OverallDrivingScore",
+            unit: ""
+          }
+        ];
+
+        const tilesHTML = tiles.map(tile => `
+          <div class="tile-card">
+            <div class="tile-header">
+              <div class="tile-icon">${tile.icon}</div>
+              <h3 class="tile-title">${tile.title}</h3>
+            </div>
+            <div class="tile-content">
+              <div class="tile-value">
+                ${maxValues[tile.key].value.toFixed(2)}${tile.unit}
+              </div>
+            </div>
+          </div>
+        `).join("");
+
+        document.getElementById("tilesGrid").innerHTML = tilesHTML;
+      }
+
+      window.onload = loadCSV;
+    </script>
+  </body>
+</html>

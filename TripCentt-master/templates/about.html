@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Trip-Centt</title>
+
+    <!-- Favicon Links for Desktop -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="144x144"
+      href="/Users/dipanshurautela/Downloads/TripCentt/TripCentt-dev/tripcent/static/favicon/android-icon-144x144.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="static/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon" />
+
+    <style>
+      /* Reset some default styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-image: url("static/Valuation.jpeg"); /* Add your image path here */
+        background-size: cover;
+        background-position: center;
+        color: #f1f1f1; /* Change text color to light for contrast */
+        line-height: 1.6;
+        scroll-behavior: smooth;
+        position: relative;
+      }
+
+      /* Dark overlay */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        z-index: 1;
+      }
+
+      /* Header Section */
+      .header {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 69, 0, 0.8),
+            rgba(255, 140, 0, 0.8)
+          )
+          url("static/carlogin.jpeg");
+        color: #ffffff;
+        padding: 50px 0;
+        text-align: center;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 2; /* Ensure the header is above the overlay */
+      }
+
+      .header h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: 1.5px;
+      }
+
+      .about-text {
+        font-size: 1.2rem; /* Smaller font size for "about" */
+        color: #ffffff; /* Optional: Change color if needed */
+        margin-right: 5px; /* Add some space between "about" and "Trip-Centt" */
+      }
+
+      .brand-name {
+        font-size: 3.2rem; /* Keep the larger font size for "Trip-Centt" */
+        font-weight: 700;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* About Section */
+      .about-section {
+        padding: 50px;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2; /* Ensure content is above the overlay */
+      }
+
+      .about-section h2 {
+        font-size: 2.5rem;
+        color: #ff4500;
+        margin-bottom: 20px;
+      }
+
+      .about-section p {
+        font-size: 1.1rem;
+        color: #ccc; /* Changed to a lighter color for contrast */
+        margin-bottom: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .about-section h3 {
+        font-size: 2rem;
+        color: #ff4500;
+        margin-top: 40px;
+        margin-bottom: 15px;
+      }
+
+      .about-section ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+        max-width: 800px;
+        margin: 20px auto;
+        padding-left: 20px;
+      }
+
+      .about-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        color: #f1f1f1; /* Changed to light for better contrast */
+        position: relative;
+        padding-left: 20px;
+      }
+
+      .about-section li::before {
+        content: "➤";
+        color: #ff6600;
+        position: absolute;
+        left: 0;
+      }
+
+      .about-section .cta-button {
+        display: inline-block;
+        background-color: #ff6600;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-top: 30px;
+      }
+
+      .about-section .cta-button:hover {
+        background-color: #ff4500;
+        transform: scale(1.05);
+      }
+
+      /* Footer */
+      .footer {
+        background: #333;
+        color: white;
+        padding: 25px 0;
+        text-align: center;
+      }
+
+      .footer p {
+        font-size: 0.9rem;
+        color: #bbb;
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+        .about-section h2 {
+          font-size: 2rem;
+        }
+
+        .about-section h3 {
+          font-size: 1.5rem;
+        }
+
+        .about-section p,
+        .about-section li {
+          font-size: 1rem;
+        }
+
+        .about-section .cta-button {
+          padding: 10px 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <h1>
+        <span class="about-text">About</span>
+        <span class="brand-name">Trip-Centt</span>
+      </h1>
+    </header>
+
+    <main class="about-section">
+      <section>
+        <h2>Welcome to Trip-Centt!</h2>
+        <p>
+          At Trip-Centt, we are committed to transforming the second-hand
+          vehicle market by providing unparalleled transparency and trust.
+          Whether you’re buying or selling a used car, our platform ensures you
+          receive accurate and fair valuations, allowing you to make informed
+          decisions with confidence.
+        </p>
+
+        <h3>Car Valuation: Unbiased and Accurate</h3>
+        <p>
+          We understand that traditional car valuation tools often have vested
+          interests, leading to discrepancies in the perceived value of
+          vehicles. At Trip-Centt, we prioritize delivering real value to our
+          users. Our advanced valuation model is designed to offer accurate
+          predictions based on various factors, including:
+        </p>
+        <ul>
+          <li>
+            <strong>Market Trends:</strong> We analyze the latest trends in the
+            automotive market to ensure our valuations reflect current demand.
+          </li>
+          <li>
+            <strong>Vehicle Condition:</strong> Our model assesses the condition
+            of the car, taking into account maintenance history and overall wear
+            and tear.
+          </li>
+          <li>
+            <strong>Driving Behavior:</strong> By examining the driving habits
+            of previous owners, we provide insights that impact the valuation,
+            ensuring you know exactly what you’re investing in.
+          </li>
+        </ul>
+
+        <h3>Driving Behavior Insights: Know Your Car's History</h3>
+        <p>
+          When purchasing a used car, it's crucial to understand how it has been
+          driven. Trip-Centt offers insights into the driving behavior of the
+          vehicle, allowing you to make an informed decision. Our platform
+          provides:
+        </p>
+        <ul>
+          <li>
+            <strong>Comprehensive Driving Data:</strong> Gain access to
+            previously recorded driving behaviors, including mileage, driving
+            patterns, and usage intensity.
+          </li>
+          <li>
+            <strong>Safety and Performance Metrics:</strong> Understand how the
+            car has been treated on the road, helping you gauge its performance
+            and longevity.
+          </li>
+        </ul>
+
+        <h3>Dashboard of Driving Behavior: A Visual Experience</h3>
+        <p>
+          Our intuitive dashboard is designed to give you a comprehensive
+          overview of driving behavior metrics at a glance. Here’s what you can
+          expect:
+        </p>
+        <ul>
+          <li>
+            <strong>User-Friendly Interface:</strong> Navigate seamlessly
+            through our dashboard to access detailed insights into your car's
+            driving history.
+          </li>
+          <li>
+            <strong>Visual Data Representation:</strong> Experience data like
+            never before with vibrant, interactive charts and graphs that
+            showcase important metrics.
+          </li>
+        </ul>
+
+        <p>
+          With Trip-Centt, we strive to build a community of informed buyers and
+          sellers, revolutionizing the way second-hand vehicles are valued. Join
+          us on our journey to bring trust and transparency to the automotive
+          market!
+        </p>
+        <a href="/" class="cta-button">Back to Home</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 Trip-Centt. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
